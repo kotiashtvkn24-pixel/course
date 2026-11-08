@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Привітання</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <main>
+    <h1> Запланувати привітання</h1>
+    <p class="hint">Привітання піде з наших акауннтів.</p>
+
+    <form id="form">
+      <input id="username" placeholder="@юзернейм" autocapitalize="none" required>
+      <input id="when" type="datetime-local" required>
+      <select id="style"></select>
+      <textarea id="text" rows="3" maxlength="1000" placeholder="Або свій текст (необов'язково)"></textarea>
+      <div id="preview" class="card"></div>
+      <label class="check"><input id="repeat" type="checkbox"> Повторювати щороку</label>
+      <button class="primary">Запланувати</button>
+    </form>
+
+    <ul id="list"></ul>
+  </main>
+  <div id="toast" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Style { +compose(name): str }
+class Warm
+class Formal
+class Funny
+class Short
+class StyleFactory { +create(key): Style\n+has(key): bool\n+catalog(): list }
+Style <|-- Warm
+Style <|-- Formal
+Style <|-- Funny
+Style <|-- Short
+StyleFactory ..> Style : creates
+
+abstract class Observer { +notify(notification) }
+class EventBus { +subscribe(observer)\n+publish(notification) }
+class TelegramNotifier
+Observer <|-- TelegramNotifier
+EventBus o-- Observer
+
+abstract class Sender { +first_name(username)\n+send(username, text) }
+class TelethonSender
+Sender <|-- TelethonSender
+
+abstract class GreetingRepository { +add()\n+list_all()\n+due(now)\n+update()\n+delete() }
+class SqliteGreetingRepository
+GreetingRepository <|-- SqliteGreetingRepository
+class Greeting
+GreetingRepository ..> Greeting
+
+class GreetingService { +add()\n+list_all()\n+remove()\n+send_due() }
+GreetingService --> GreetingRepository
+GreetingService --> StyleFactory
+GreetingService --> Sender
+GreetingService --> EventBus
+
+class "web.py (FastAPI)" as Web <<Controller>>
+class "bot.py (aiogram Router)" as Bot <<Controller>>
+class "webapp (HTML/JS)" as View <<View>>
+class "Scheduler (APScheduler)" as Sched
+Web --> GreetingService
+Sched --> GreetingService
+View ..> Web : HTTP + initData
+@enduml
